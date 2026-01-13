@@ -2,6 +2,14 @@
 
 ## Versione 1.0
 
+## ⬇️ Download (Portable)
+
+- **Ultima release (consigliata)**: https://github.com/luconezena/DIDOGEST-GESTIONALE/releases/latest
+- **Portable v1.0.2**:
+   - ZIP: https://github.com/luconezena/DIDOGEST-GESTIONALE/releases/download/v1.0.2/DidoGest-Portable-1.0.2-win-x64.zip
+   - SHA256: https://github.com/luconezena/DIDOGEST-GESTIONALE/releases/download/v1.0.2/DidoGest-Portable-1.0.2-win-x64.zip.sha256
+   - Note release: https://github.com/luconezena/DIDOGEST-GESTIONALE/releases/tag/v1.0.2
+
 **DIDO-GEST** è un gestionale completo e professionale per Windows, progettato per gestire tutte le principali procedure di gestione dell'attività commerciale.
 
 Nota: per lo stato reale di implementazione (FATTO/PARZIALE/NON PRESENTE) vedi **REQUISITI_E_COPERTURA.md**.
