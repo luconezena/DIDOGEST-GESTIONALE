@@ -1,0 +1,139 @@
+crea un programma gestionale per windows ( nome del gestionale : DIDO-GEST ) per gestire tutte le procedure principali di gestione della attivita' commerciale. Sono gestiti l'emissione di tutti i documenti come bolle, fatture accompagnatorie e differite, documenti non fiscali. Vengono inoltre gestiti gli ordini clienti e a fornitori, da uno a più magazzini (sino a un massimo di 200!) con i relativi carichi e listini prezzi personalizzati (sino a un massimo di 10.000!).In dettaglio -
+
+Il gestionale è composto da:
+Magazzino
+Fatturazione elettronica
+Contabilità
+Assistenze e contratti
+Archiviazione Documentale
+
+
+Gestione magazzino e fatturazione :
+Descrizione modulo:
+Dettagliate anagrafiche articoli
+Possibilita' di gestione degli articoli in taglie e colori a 1, 2 o 3 livelli
+Gestione di un numero pressoche' illimitato di listini (sino a 10.000)
+Gestione integrata di più magazzini e negozi (sino a 200)
+Emissione preventivi e ordini (clienti e fornitori)
+Emissione DDT, fatture accompagnatorie e differite
+Carichi di magazzino da DDT e fatture fornitori
+Gestione di articoli di servizio che non generano movimenti di magazzino
+Gestione numeri di serie, lotti, codici IMEI, ecc.
+Gestione codici a barre e stampa etichette personalizzate
+Gestione multivaluta
+Gestione imposte RAE
+Gestione reverse charge
+Visualizzazione immediata delle disponibilita' a magazzino
+Visualizzazione immediata dei prodotti sottoscorta e da riordinare
+Sistema facilitato e personalizzabile per la generazione dei documenti (converti da preventivo a ordine, da ordine a DTT, da DDT a fattura differita, ecc.)
+Stampe personalizzabili tramite report editor gia' incluso nel programma
+Gestione agenti
+Statistiche
+Gestione foto
+
+Fatturazione elettronica semplificata:
+Descrizione modulo:
+ fatturazione elettronica B2B, PA e B2C in grado di gestire tutto il processo di:
+
+- Emissione della fattura elettronica in formato XML
+- Firma digitale del documento
+- Invio della fattura tramite SDI
+- Ricezione delle fatture fornitori tramite SDI (codice SDI del portale: G4AI1U8)
+- Conservazione sostitutiva del documento per 10 anni
+
+La procedura di emissione della fattura elettronica del software perfettamente integrata al gestionale.
+
+Una volta creata la fattura, il software si occupa della generazione della fattura elettronica, della firma digitale del documento e del suo invio tramite il proprio hub (Codice SDI: G4AI1U8) interconnesso al portale SDI dell'Agenzia delle Entrate.
+Il software si occupa di recapitare tramite SDI il documento al cliente destinatario della fattura ma anche nell'effettuare la firma digitale e la conservazione sostitutiva delle fatture per 10 anni come previsto per legge.
+
+Per il ciclo passivo, il software, è in grado di ricevere le fatture elettroniche dai fornitori in modo da effettuare il carico del documento dentro al software in maniera automatica e inserire l'XML della fattura elettronica del fornitore in conservazione sostitutiva per 10 anni.
+
+Contabilita' base:
+Descrizione modulo:
+Piani dei conti
+
+Codifica multilivello completamente personalizzabile da 2 a 8 livelli, con codici sia numerici che alfanumerici
+Gestione causali multiple ed automatismi di contabilizzazione differenziati per piano dei conti
+
+Prima nota
+
+Procedura per la registrazione della prima nota in partita doppia
+Ricerche e viste completamente personalizzabili
+Mastrini
+
+Visualizzazione e stampa mastrini clienti e fornitori
+Visualizzazione e stampa dei mastrini relativi ai conti generici
+
+Registri IVA
+
+Procedura per la gestione dei registri IVA (acquisti, vendite, corrispettivi)
+Gestione IVA detraibile ed indetraibile
+Gestione IVA ad esigibilita' differita
+Riepilogo IVA
+
+Gestione assistenze, cantieri e contratti:
+Descrizione modulo:
+Il modulo di gestione assistenze, cantieri e contratti  integra tre parti utili ai centri di riparazione (gestione assistenze), a chi gestisce contratti di varia natura (gestione dei contratti) e per quelle aziende o artigiani che gestiscono dei cantieri (gestione dei cantieri).
+La gestione delle assistenze permette di controllare il flusso delle riparazioni di un qualsiasi laboratorio a cominciare dal momento in cui entrano in laboratorio, fino al momento in cui vengono riconsegnate al cliente.
+Questa preocedura consente di creare una scheda per ogni prodotto da riparare/lavorare all'interno della quale viene gestito tutto il workflow della riparazione tenendo conto delle verifiche effettuate, del costo e dei tempi delle lavorazioni eseguite, delle parti di ricambio utilizzate, delle causali di difettosità, degli spostamenti dell'articolo (invio in lavorazione presso un centro di assistenza esterno) e della riconsegna al cliente.
+Il sistema permette di personalizzare tutti i report tramite il potente editor interno di Ready Pro che consente di stampare etichette identificative per le riparazioni, ricevute da consegnare ai clienti, distinte di lavorazione per uso interno oppure valorizzate per consegnarle ai clienti, ddt di invio ai centri di assistenza, ricevute di riconsegna, ecc.
+
+La procedura di gestione dei contratti permette di aprire dei contratti che possono avere data di inizio / fine ed integrare anche un monte ore a scalare. All'interno dei contatti possono essere definite anche date specifiche di fatturazione in modo tale che la procedura di fatturazione automatica crei il documento di vendita partendo da un gruppo di contratti.
+
+La procedura di gestione dei cantieri è lo strumento ideale per le imprese edili, di manutenzione, di pulizia e per artigiani come elettricisti o idraulici che effettuano interventi a medio lungo periodo su uno o più cantieri. All'interno di ogni cantiere è possibile specificare le date di intervento, gli operai e le squadre che intervengono ogni giorno, specificare i costi di manodopera e materiale per ottenere alla fine informazioni sul margine ottenuto da ogni singolo cantiere.
+ 
+Caratteristiche principali:
+Scheda articolo: descrizione prodotto, quantita', matricola e 3 campi personalizzabili (utilizzabili per indicare modello, colore o quant'altro)
+Scheda apertura riparazione: riferimento del cliente, collegamento con il documento di carico, difetto dichiarato dal cliente (sia descrittivo che da tabella), indicazione se in garanzia o meno, riferimenti al documento di acquisto
+Scheda prime verifiche: difetto riscontrato (sia descrittivo che da tabella predefinita dall'utente), note sulla garanzia, riferimento al fornitore ed al documento di acquisto, lavorazioni e materiali necessari per effettuare la riparazione (da cui è possibile generare un preventivo di spesa per il cliente)
+Scheda lavorazione: nella scheda lavorazione vengono indicate le lavorazioni ed i materiali utilizzati per effettuare la riparazione e da cui è poi possibile emettere direttamente la DDT o la ricevuta di scarico del prodotto con addebito al cliente
+Scheda chiusura: riferimento al documento di chiusura/reso al cliente, tipo di chiusura (da tabella) e note
+Possibilità di visualizzare tutti i documenti di magazzino associati alla riparazione (preventivi, carico in riparazione dal cliente, ddt di invio presso un centro di assistenza esterno, carico da centro assistenza esterno, ddt di reso riparato al cliente)
+Integrazione con il sistema di messaggistica di Ready Pro
+Gestione dei numeri di serie anche tramite codice a barre
+Integrazione con il sistema di gestione lotti/numeri di serie del modulo magazzino
+Tutti i moduli di stampa personalizzabili tramite report editor incluso nel programma
+Gestione di contratti a tempo e/o a monte ore
+Possibilità di specificare su ogni contratto costi di intervento fisso, giorni di validità, monte ore acquistato, minuti minimi fatturabili
+Gestione di più cantieri
+Possibilita' di specificare giorno per giorno gli operai intervenuti e i costi di manodopera
+Elenco dei materiali inviati su ogni singolo cantiere prelevabili direttamente dal magazzino
+Report dettagliato costi/ricavi consultabile giorno per giorno
+
+Archiviazione documentale:
+Caratteristiche principali:
+Archiviazione documenti
+Gestione di un illimitato numero di schede e file
+Catalogazione partendo da un'unica cartella documenti (particolarmente utile per effettuare backup)
+Importazione di file in qualsiasi formato (PDF, Word, Excel, Zip, immagini, eseguibili, ecc.)
+Acquisizione diretta da scanner di documenti (in formato PDF. Richiede scanner con driver twain standard)
+Documenti associabili ad un numero illimitato di anagrafiche clienti/fornitori/agenti/contatti
+Documenti associabili ad un numero illimitato di anagrafiche articoli
+Documenti associabili ai rapporti di non conformità/azioni correttive (gestione della qualita')
+Gestione dei parametri di protocollo (numero, data, apertura, chiusura, stato, ecc.)
+Semplice e funzionale maschera di ricerca dei documenti
+Possibilita' di utilizzo stand-alone (senza dover attivare altri moduli)
+Perfetta integrazione in rete con più terminali e piu' operatori
+Possibilita' di assegnare privilegi agli utenti sui documenti archiviati (per la modifica, creazione, stampa, ecc.)
+Supporto on-line gratuito
+Gestione dei rapporti di non conformità (RNC)
+Possibilità di collegare una o più azioni correttive ad ogni RNC
+Stampa RNC completamente personalizzabile tramite il report editor interno
+Tabelle stati, tipologia, causale, valutazione completamente personalizzabili
+Integrazione dei RNC con il sistema di messaggistica interno di Ready per consentire la distribuzione delle informazioni all'interno dell'azienda
+Possibilità di collegare RNC al modulo di archiviazione documentale (in modo da archiviare files Word, Excel, PDF, ecc. che saranno immediatamente disponibili in seguito partendo dal RNC)
+Gestione azioni correttive (AC)
+Possibilità di collegare AC ad uno o più documenti di magazzino (DDT, fatture, carichi di magazzino, ecc.)
+Stampa AC completamente personalizzabile tramite il report editor interno
+Tabelle stati e tipologia completamente personalizzabili
+Possibilità di collegare AC al modulo di archiviazione documentale (in modo da archiviare files Word, Excel, PDF, ecc. che saranno immediatamente disponibili in seguito partendo dal RNC)
+Gestione valutazione fornitori
+Possibilità di personalizzare una tabella con i livelli di valutazione ed i relativi punteggi minimi, massimi e giorni di validità
+Possibilità di inserire il punteggio direttamente nell'anagrafica dei fornitori con calcolo automatico della valutazione e della data di scadenza della valutazione
+Sistema di messaggistica interno
+Consente l'invio di documenti e comunicazioni al personale interno in modo semplice e rapido
+Tutti i messaggi rimangono memorizzati nel database con la possibilità di impedirne la cancellazione
+Memorizzazione data e ora di invio da parte del mittente e data e ora di ricezione da parte del destinatario
+Gestione del manuale della qualità
+Gestione degli accessi ai documenti per mansione (ad ogni operatore è possibile associare una o più mansioni)
+Integrazione con la procedura di messaggistica, in modo da consentire la distribuzione dei documenti in modo semplice e rapido (per dipendente o per mansione in base alle mansioni collegate ad ogni documento). Il sistema di memorizzazione della data/ora di ricezione e' utilizzabile come conferma di consegna del documento

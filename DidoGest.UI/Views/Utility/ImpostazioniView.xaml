@@ -1,0 +1,162 @@
+<UserControl x:Class="DidoGest.UI.Views.Utility.ImpostazioniView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Impostazioni" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <ScrollViewer Grid.Row="1">
+            <StackPanel>
+                <TextBlock Text="Dati azienda" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+
+                <WrapPanel>
+                    <TextBox x:Name="TxtRagione" Width="360" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Ragione sociale" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtPiva" Width="220" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Partita IVA" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtCf" Width="220" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Codice fiscale" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <TextBox x:Name="TxtIndirizzo" Width="360" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Indirizzo" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtCap" Width="120" Margin="0,0,10,10" materialDesign:HintAssist.Hint="CAP" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtCitta" Width="220" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Città" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtProv" Width="120" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Provincia" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <TextBox x:Name="TxtTel" Width="220" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Telefono" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtEmail" Width="300" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Email" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtPec" Width="300" Margin="0,0,10,10" materialDesign:HintAssist.Hint="PEC" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtSdi" Width="160" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Codice SDI" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+
+                <TextBlock Text="Percorsi" FontSize="16" FontWeight="SemiBold" Margin="0,10,0,10"/>
+
+                <WrapPanel>
+                    <ComboBox x:Name="CmbDbProvider" Width="260" Margin="0,0,10,10" />
+                    <TextBlock Text="Provider database" VerticalAlignment="Center" Opacity="0.7" Margin="0,0,10,10"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <CheckBox x:Name="ChkDemo" Content="Abilita dati DEMO (se disabilitato, dopo 'Pulisci DEMO' non verranno ricreati all'avvio)" Margin="0,0,10,10" />
+                </WrapPanel>
+
+                <WrapPanel>
+                    <TextBox x:Name="TxtDb" Width="520" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Percorso database" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtArchivio" Width="520" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Percorso archivio" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <TextBox x:Name="TxtSqlServerConn" Width="1060" Margin="0,0,10,10"
+                             materialDesign:HintAssist.Hint="Stringa di connessione SQL Server (solo se Provider database = SqlServer)"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+
+                <TextBlock Text="SQL Server (config guidata)" FontSize="14" FontWeight="SemiBold" Margin="0,6,0,8"/>
+                <WrapPanel>
+                    <TextBox x:Name="TxtSqlHost" Width="300" Margin="0,0,10,10"
+                             materialDesign:HintAssist.Hint="Server (es. PCUFFICIO01 o 192.168.1.10)"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtSqlInstance" Width="220" Margin="0,0,10,10"
+                             materialDesign:HintAssist.Hint="Istanza (es. SQLEXPRESS)"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtSqlPort" Width="120" Margin="0,0,10,10"
+                             materialDesign:HintAssist.Hint="Porta (es. 1433)"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtSqlDatabase" Width="220" Margin="0,0,10,10"
+                             materialDesign:HintAssist.Hint="Database (es. DidoGest)"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <ComboBox x:Name="CmbSqlAuth" Width="220" Margin="0,0,10,10" />
+                    <TextBox x:Name="TxtSqlUser" Width="220" Margin="0,0,10,10"
+                             materialDesign:HintAssist.Hint="Utente (solo autenticazione SQL)"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <PasswordBox x:Name="PwdSql" Width="220" Margin="0,0,10,10"
+                                 materialDesign:HintAssist.Hint="Password (solo autenticazione SQL)"/>
+                    <Button Content="Genera" Click="BtnSqlGenera_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                    <Button Content="Test connessione" Click="BtnSqlTest_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                </WrapPanel>
+
+                <WrapPanel>
+                    <Button x:Name="BtnSfogliaDb" Content="Sfoglia DB..." Click="BtnSfogliaDb_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                    <Button Content="Sfoglia Archivio..." Click="BtnSfogliaArchivio_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                </WrapPanel>
+
+                <TextBlock Text="Nota: per lavorare in rete (più PC sullo stesso database) è consigliato usare SQL Server Express sul PC 'server'." FontStyle="Italic" Opacity="0.8" TextWrapping="Wrap" Margin="0,6,0,0"/>
+
+                <TextBlock Text="Stampa" FontSize="16" FontWeight="SemiBold" Margin="0,10,0,10"/>
+                <WrapPanel>
+                    <TextBox x:Name="TxtLogo" Width="840" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Logo stampa (opzionale)" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <Button Content="Sfoglia logo..." Click="BtnSfogliaLogo_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                    <Button Content="Rimuovi" Click="BtnRimuoviLogo_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                </WrapPanel>
+
+                <TextBlock Text="Importazione/Esportazione dati (CSV)" FontSize="16" FontWeight="SemiBold" Margin="0,10,0,10"/>
+                <WrapPanel>
+                    <Button Content="Esporta Clienti..." Click="BtnExportClienti_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                    <Button Content="Importa Clienti..." Click="BtnImportClienti_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                    <Button Content="Esporta Fornitori..." Click="BtnExportFornitori_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                    <Button Content="Importa Fornitori..." Click="BtnImportFornitori_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                    <Button Content="Esporta Articoli..." Click="BtnExportArticoli_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                    <Button Content="Importa Articoli..." Click="BtnImportArticoli_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                </WrapPanel>
+                <TextBlock Text="Nota: il CSV usa separatore ';' e include l'intestazione colonne. In import, l'aggiornamento avviene per Codice (non sovrascrive i campi vuoti)." FontStyle="Italic" Opacity="0.8" TextWrapping="Wrap" Margin="0,0,0,6"/>
+
+                <WrapPanel>
+                    <Button Content="Esporta pacchetto migrazione..." Click="BtnExportPackage_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                    <Button Content="Importa pacchetto migrazione..." Click="BtnImportPackage_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignOutlinedButton}"/>
+                </WrapPanel>
+                <TextBlock Text="Nota: il pacchetto migrazione crea una cartella con più CSV (ordine numerato)." FontStyle="Italic" Opacity="0.8" TextWrapping="Wrap" Margin="0,0,0,6"/>
+
+                <TextBlock Text="Fatturazione elettronica (integrazione esterna)" FontSize="16" FontWeight="SemiBold" Margin="0,10,0,10"/>
+                <WrapPanel>
+                    <CheckBox x:Name="ChkFeEnabled" Content="Abilita fatturazione elettronica" Margin="0,0,10,10" />
+                    <ComboBox x:Name="CmbFeMode" Width="360" Margin="0,0,10,10" />
+                    <TextBlock Text="Modalità" VerticalAlignment="Center" Opacity="0.7" Margin="0,0,10,10"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBox x:Name="TxtFeCommercialistaFolder" Width="840" Margin="0,0,10,10"
+                             materialDesign:HintAssist.Hint="Cartella XML (consegna al commercialista)"
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <Button x:Name="BtnSfogliaFeCommercialista" Content="Sfoglia..." Click="BtnSfogliaFeCommercialista_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBox x:Name="TxtIban" Width="360" Margin="0,0,10,10" materialDesign:HintAssist.Hint="IBAN" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtBancaAzienda" Width="520" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Banca" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBox x:Name="TxtFeProvider" Width="360" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Provider FE (es. Aruba/Namirial/...)" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtFeApiUrl" Width="520" Margin="0,0,10,10" materialDesign:HintAssist.Hint="URL API" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBox x:Name="TxtFeApiKey" Width="880" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Chiave API / Token" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                </WrapPanel>
+
+                <TextBlock Text="Firma digitale (integrazione esterna)" FontSize="16" FontWeight="SemiBold" Margin="0,10,0,10"/>
+                <WrapPanel>
+                    <TextBox x:Name="TxtFirmaProvider" Width="360" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Provider firma" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <TextBox x:Name="TxtCertPath" Width="520" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Certificato PFX (opzionale)" Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+                    <Button Content="Sfoglia PFX..." Click="BtnSfogliaCert_Click" Margin="0,0,10,10" Style="{StaticResource MaterialDesignRaisedButton}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <PasswordBox x:Name="PwdCert" Width="320" Margin="0,0,10,10" materialDesign:HintAssist.Hint="Password certificato (opzionale)"/>
+                </WrapPanel>
+
+                <TextBlock Text="Nota: i dati FE/Firma salvano solo configurazioni. L'invio FE e la firma richiedono un provider/servizio esterno." FontStyle="Italic" Opacity="0.8" TextWrapping="Wrap" Margin="0,6,0,0"/>
+
+                <TextBlock Text="Le impostazioni vengono salvate in un file locale e sono modificabili in qualsiasi momento." FontStyle="Italic" Opacity="0.8" TextWrapping="Wrap"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock x:Name="LblFile" VerticalAlignment="Center" Margin="0,0,12,0" Opacity="0.7"/>
+            <Button Content="Salva" Click="BtnSalva_Click" Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

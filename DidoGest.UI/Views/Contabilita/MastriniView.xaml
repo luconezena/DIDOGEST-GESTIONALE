@@ -1,0 +1,47 @@
+<UserControl x:Class="DidoGest.UI.Views.Contabilita.MastriniView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Mastrini" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <ComboBox x:Name="CmbConto" Width="360" Margin="0,0,10,0"
+                      materialDesign:HintAssist.Hint="Conto" 
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      SelectionChanged="Filter_Changed"/>
+            <DatePicker x:Name="DpDa" Margin="0,0,10,0" SelectedDateChanged="Filter_Changed"/>
+            <DatePicker x:Name="DpA" Margin="0,0,10,0" SelectedDateChanged="Filter_Changed"/>
+            <Button Content="Aggiorna" Click="BtnAggiorna_Click" Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="MastrinoDataGrid" AutoGenerateColumns="False"
+                  IsReadOnly="True" CanUserAddRows="False" SelectionMode="Single"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data" Binding="{Binding Data, StringFormat=dd/MM/yyyy}" Width="120"/>
+                <DataGridTextColumn Header="Reg." Binding="{Binding NumeroRegistrazione}" Width="120"/>
+                <DataGridTextColumn Header="Descrizione" Binding="{Binding Descrizione}" Width="*"/>
+                <DataGridTextColumn Header="Dare" Binding="{Binding Dare, StringFormat=N2}" Width="120"/>
+                <DataGridTextColumn Header="Avere" Binding="{Binding Avere, StringFormat=N2}" Width="120"/>
+                <DataGridTextColumn Header="Saldo" Binding="{Binding Saldo, StringFormat=N2}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Totale Dare: " FontWeight="Bold"/>
+            <TextBlock x:Name="LblDare" Text="0" Margin="0,0,20,0"/>
+            <TextBlock Text="Totale Avere: " FontWeight="Bold"/>
+            <TextBlock x:Name="LblAvere" Text="0" Margin="0,0,20,0"/>
+            <TextBlock Text="Saldo: " FontWeight="Bold"/>
+            <TextBlock x:Name="LblSaldo" Text="0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

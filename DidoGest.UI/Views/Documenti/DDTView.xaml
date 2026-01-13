@@ -1,0 +1,50 @@
+<UserControl x:Class="DidoGest.UI.Views.Documenti.DDTView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Gestione DDT" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="SearchBox" Width="300" materialDesign:HintAssist.Hint="Cerca DDT..." 
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,10,0"
+                     TextChanged="SearchBox_TextChanged"/>
+            <Button Content="Nuovo DDT" Click="BtnNuovo_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Converti in Fattura" Click="BtnConverti_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Fattura differita da selezione" Click="BtnFatturaDaSelezione_Click" 
+                Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Elimina" Click="BtnElimina_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="DDTDataGrid" AutoGenerateColumns="False" 
+              IsReadOnly="True" SelectionMode="Extended" CanUserAddRows="False"
+                  MouseDoubleClick="DDTDataGrid_MouseDoubleClick"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Numero" Binding="{Binding NumeroDocumento}" Width="100"/>
+                <DataGridTextColumn Header="Data" Binding="{Binding DataDocumento, StringFormat=dd/MM/yyyy}" Width="100"/>
+                <DataGridTextColumn Header="Cliente/Fornitore" Binding="{Binding ControparteRagioneSociale}" Width="250"/>
+                <DataGridTextColumn Header="Importo" Binding="{Binding TotaleDocumento, StringFormat=C2}" Width="120"/>
+                <DataGridTextColumn Header="Fattura" Binding="{Binding FatturaNumero}" Width="120"/>
+                <DataGridCheckBoxColumn Header="Fatturato" IsReadOnly="True" Binding="{Binding IsFatturato, Mode=OneWay}" Width="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Totale DDT: " FontWeight="Bold"/>
+            <TextBlock x:Name="TotaleDDT" Text="0"/>
+            <TextBlock Text=" | DDT da fatturare: " FontWeight="Bold" Margin="20,0,0,0"/>
+            <TextBlock x:Name="DDTDaFatturare" Text="0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

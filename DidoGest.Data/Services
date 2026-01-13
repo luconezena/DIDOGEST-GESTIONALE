@@ -1,0 +1,225 @@
+using DidoGest.Core.Entities;
+using DidoGest.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace DidoGest.Core.Services;
+
+/// <summary>
+/// Servizio per la gestione della contabilità
+/// </summary>
+public class ContabilitaService
+{
+    private readonly DidoGestDbContext _context;
+
+    public ContabilitaService(DidoGestDbContext context)
+    {
+        _context = context;
+    }
+
+    // Prima Nota
+    public async Task<List<RegistrazioneContabile>> GetRegistrazioniAsync(DateTime dataInizio, DateTime dataFine)
+    {
+        return await _context.RegistrazioniContabili
+            .Include(r => r.Movimenti)!
+                .ThenInclude(m => m.Conto)
+            .Where(r => r.DataRegistrazione >= dataInizio && r.DataRegistrazione <= dataFine)
+            .OrderBy(r => r.DataRegistrazione)
+            .ToListAsync();
+    }
+
+    public async Task<RegistrazioneContabile> SaveRegistrazioneAsync(RegistrazioneContabile registrazione)
+    {
+        // Verifica quadratura dare/avere
+        if (registrazione.Movimenti != null)
+        {
+            registrazione.TotaleDare = registrazione.Movimenti.Sum(m => m.ImportoDare);
+            registrazione.TotaleAvere = registrazione.Movimenti.Sum(m => m.ImportoAvere);
+
+            if (Math.Abs(registrazione.TotaleDare - registrazione.TotaleAvere) > 0.01m)
+            {
+                throw new InvalidOperationException("La registrazione contabile non è quadrata. Dare e Avere devono essere uguali.");
+            }
+        }
+
+        if (registrazione.Id == 0)
+        {
+            registrazione.NumeroRegistrazione = await GeneraNumeroRegistrazioneAsync(registrazione.DataRegistrazione.Year);
+            _context.RegistrazioniContabili.Add(registrazione);
+        }
+        else
+        {
+            _context.RegistrazioniContabili.Update(registrazione);
+        }
+
+        await _context.SaveChangesAsync();
+        return registrazione;
+    }
+
+    // Piano dei Conti
+    public async Task<List<PianoDeiConti>> GetPianoContiAsync()
+    {
+        return await _context.PianiDeiConti
+            .Include(p => p.ContoSuperiore)
+            .Include(p => p.SottoConti)
+            .Where(p => p.Attivo)
+            .OrderBy(p => p.Codice)
+            .ToListAsync();
+    }
+
+    public async Task<PianoDeiConti> SaveContoAsync(PianoDeiConti conto)
+    {
+        if (conto.Id == 0)
+        {
+            _context.PianiDeiConti.Add(conto);
+        }
+        else
+        {
+            _context.PianiDeiConti.Update(conto);
+        }
+
+        await _context.SaveChangesAsync();
+        return conto;
+    }
+
+    // Mastrini
+    public async Task<List<MovimentoContabile>> GetMastrinoAsync(int contoId, DateTime dataInizio, DateTime dataFine)
+    {
+        return await _context.MovimentiContabili
+            .Include(m => m.Registrazione)
+            .Include(m => m.Conto)
+            .Where(m => m.ContoId == contoId && 
+                       m.Registrazione!.DataRegistrazione >= dataInizio && 
+                       m.Registrazione.DataRegistrazione <= dataFine)
+            .OrderBy(m => m.Registrazione!.DataRegistrazione)
+            .ToListAsync();
+    }
+
+    public async Task<Dictionary<int, decimal>> GetSaldiContiAsync(DateTime dataRiferimento)
+    {
+        var movimenti = await _context.MovimentiContabili
+            .Include(m => m.Registrazione)
+            .Where(m => m.Registrazione!.DataRegistrazione <= dataRiferimento)
+            .GroupBy(m => m.ContoId)
+            .Select(g => new
+            {
+                ContoId = g.Key,
+                Saldo = g.Sum(m => m.ImportoDare) - g.Sum(m => m.ImportoAvere)
+            })
+            .ToListAsync();
+
+        return movimenti.ToDictionary(m => m.ContoId, m => m.Saldo);
+    }
+
+    // Registri IVA
+    public async Task<List<RegistroIVA>> GetRegistriIVAAsync(string tipoRegistro, DateTime dataInizio, DateTime dataFine)
+    {
+        return await _context.RegistriIVA
+            .Include(r => r.Documento)
+            .Where(r => r.TipoRegistro == tipoRegistro && 
+                       r.DataRegistrazione >= dataInizio && 
+                       r.DataRegistrazione <= dataFine)
+            .OrderBy(r => r.DataRegistrazione)
+            .ThenBy(r => r.NumeroProtocollo)
+            .ToListAsync();
+    }
+
+    public async Task<RegistroIVA> RegistraIVAAsync(int documentoId)
+    {
+        var documento = await _context.Documenti
+            .Include(d => d.Righe)
+            .FirstOrDefaultAsync(d => d.Id == documentoId);
+
+        if (documento == null)
+            throw new InvalidOperationException("Documento non trovato");
+
+        // Verifica se già registrato
+        var esistente = await _context.RegistriIVA
+            .FirstOrDefaultAsync(r => r.DocumentoId == documentoId);
+        if (esistente != null)
+            return esistente;
+
+        string tipoRegistro = documento.ClienteId.HasValue ? "VENDITE" : "ACQUISTI";
+        
+        var registro = new RegistroIVA
+        {
+            TipoRegistro = tipoRegistro,
+            DataRegistrazione = documento.DataDocumento,
+            DocumentoId = documentoId,
+            NumeroProtocollo = await GeneraNumeroProtocolloIVAAsync(tipoRegistro, documento.DataDocumento.Year),
+            Imponibile = documento.Imponibile,
+            AliquotaIVA = 22, // Da calcolare in base alle righe
+            ImportoIVA = documento.IVA,
+            IVADetraibile = documento.FornitoreId.HasValue ? documento.IVA : 0,
+            IVAIndetraibile = 0,
+            EsigibilitaDifferita = false,
+            Descrizione = $"{documento.TipoDocumento} {documento.NumeroDocumento}"
+        };
+
+        _context.RegistriIVA.Add(registro);
+        await _context.SaveChangesAsync();
+        
+        return registro;
+    }
+
+    public async Task<Dictionary<decimal, decimal>> GetRiepilogoIVAAsync(string tipoRegistro, int anno, int trimestre)
+    {
+        var dataInizio = new DateTime(anno, (trimestre - 1) * 3 + 1, 1);
+        var dataFine = dataInizio.AddMonths(3).AddDays(-1);
+
+        var riepilogo = await _context.RegistriIVA
+            .Where(r => r.TipoRegistro == tipoRegistro && 
+                       r.DataRegistrazione >= dataInizio && 
+                       r.DataRegistrazione <= dataFine)
+            .GroupBy(r => r.AliquotaIVA)
+            .Select(g => new
+            {
+                Aliquota = g.Key,
+                TotaleIVA = g.Sum(r => r.ImportoIVA)
+            })
+            .ToListAsync();
+
+        return riepilogo.ToDictionary(r => r.Aliquota, r => r.TotaleIVA);
+    }
+
+    // Metodi privati di supporto
+    private async Task<string> GeneraNumeroRegistrazioneAsync(int anno)
+    {
+        var ultimoNumero = await _context.RegistrazioniContabili
+            .Where(r => r.DataRegistrazione.Year == anno)
+            .OrderByDescending(r => r.NumeroRegistrazione)
+            .Select(r => r.NumeroRegistrazione)
+            .FirstOrDefaultAsync();
+
+        int numero = 1;
+        if (!string.IsNullOrEmpty(ultimoNumero))
+        {
+            var parti = ultimoNumero.Split('/');
+            if (parti.Length > 0 && int.TryParse(parti[0], out int num))
+            {
+                numero = num + 1;
+            }
+        }
+
+        return $"{numero:D6}/{anno}";
+    }
+
+    private async Task<string> GeneraNumeroProtocolloIVAAsync(string tipoRegistro, int anno)
+    {
+        var ultimoNumero = await _context.RegistriIVA
+            .Where(r => r.TipoRegistro == tipoRegistro && r.DataRegistrazione.Year == anno)
+            .OrderByDescending(r => r.NumeroProtocollo)
+            .Select(r => r.NumeroProtocollo)
+            .FirstOrDefaultAsync();
+
+        int numero = 1;
+        if (!string.IsNullOrEmpty(ultimoNumero))
+        {
+            if (int.TryParse(ultimoNumero, out int num))
+            {
+                numero = num + 1;
+            }
+        }
+
+        return numero.ToString("D6");
+    }
+}

@@ -1,0 +1,44 @@
+<UserControl x:Class="DidoGest.UI.Views.FatturazioneElettronica.FatturazioneElettronicaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Fatturazione Elettronica" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <DockPanel Grid.Row="1" Margin="0,0,0,10">
+            <TextBox x:Name="SearchTextBox" Width="320" Margin="0,0,10,0"
+                     materialDesign:HintAssist.Hint="Cerca (numero, cliente, P.IVA, SDI)"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     TextChanged="SearchTextBox_TextChanged"/>
+                <Button x:Name="BtnEsporta" DockPanel.Dock="Right" Content="Genera/Invia XML" Margin="0,0,10,0" Click="BtnEsporta_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+            <Button DockPanel.Dock="Right" Content="Segna inviato" Margin="0,0,10,0" Click="BtnInviato_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+            <Button DockPanel.Dock="Right" Content="Ricarica" Click="BtnRicarica_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </DockPanel>
+
+        <DataGrid Grid.Row="2" x:Name="FeDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  CanUserAddRows="False" SelectionMode="Single"
+                  MouseDoubleClick="FeDataGrid_MouseDoubleClick"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Numero" Binding="{Binding NumeroDocumento}" Width="140"/>
+                <DataGridTextColumn Header="Data" Binding="{Binding DataDocumento, StringFormat=dd/MM/yyyy}" Width="120"/>
+                <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente.RagioneSociale}" Width="220"/>
+                <DataGridTextColumn Header="P.IVA" Binding="{Binding PartitaIVADestinatario}" Width="140"/>
+                <DataGridTextColumn Header="SDI" Binding="{Binding CodiceSDI}" Width="80"/>
+                <DataGridCheckBoxColumn Header="FE" Binding="{Binding FatturaElettronica}" Width="60"/>
+                <DataGridTextColumn Header="Stato" Binding="{Binding StatoFatturaElettronica}" Width="140"/>
+                <DataGridCheckBoxColumn Header="Inviato" Binding="{Binding XMLInviato}" Width="80"/>
+                <DataGridTextColumn Header="XML" Binding="{Binding NomeFileXML}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

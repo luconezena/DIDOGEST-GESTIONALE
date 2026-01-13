@@ -1,0 +1,121 @@
+<UserControl x:Class="DidoGest.UI.Views.Documenti.FattureView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Gestione Fatture" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="SearchBox" Width="300" materialDesign:HintAssist.Hint="Cerca fattura..." 
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,10,0"
+                     TextChanged="SearchBox_TextChanged"/>
+            <ComboBox x:Name="FilterStatoCombo" Width="180" Margin="0,0,10,0"
+                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                  SelectionChanged="FilterStatoCombo_SelectionChanged">
+            <ComboBoxItem Content="Tutte" IsSelected="True"/>
+            <ComboBoxItem Content="Non pagate"/>
+            <ComboBoxItem Content="Pagate"/>
+            <ComboBoxItem Content="Scadute"/>
+            <ComboBoxItem Content="In scadenza (7gg)"/>
+            <ComboBoxItem Content="In scadenza (15gg)"/>
+            <ComboBoxItem Content="In scadenza (30gg)"/>
+            </ComboBox>
+
+            <DatePicker x:Name="DpPeriodoDa" Width="140" Margin="0,0,10,0"
+                    materialDesign:HintAssist.Hint="Data pagamento da"
+                    SelectedDateChanged="Periodo_Changed"/>
+            <DatePicker x:Name="DpPeriodoA" Width="140" Margin="0,0,10,0"
+                    materialDesign:HintAssist.Hint="Data pagamento a"
+                    SelectedDateChanged="Periodo_Changed"/>
+            <Button Content="Nuova Fattura" Click="BtnNuovo_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Visualizza" Click="BtnVisualizza_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Segna pagata" Click="BtnSegnaPagata_Click" 
+                Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Segna non pagata" Click="BtnSegnaNonPagata_Click" 
+                Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+
+            <Button x:Name="BtnStampaIncassi" Content="Stampa incassi" Click="BtnStampaIncassi_Click"
+                Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+
+            <DatePicker x:Name="DpScadenzaQuick" Width="160" Margin="0,0,10,0"
+                        materialDesign:HintAssist.Hint="Scadenza"/>
+            <Button Content="Imposta scadenza" Click="BtnImpostaScadenza_Click" 
+                Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0,0,10,0"/>
+            <Button Content="Svuota scadenza" Click="BtnSvuotaScadenza_Click" 
+                Style="{StaticResource MaterialDesignOutlinedButton}" Margin="0,0,10,0"/>
+
+            <Button Content="Elimina" Click="BtnElimina_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="FattureDataGrid" AutoGenerateColumns="False" 
+                  IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                  SelectionChanged="FattureDataGrid_SelectionChanged"
+                  MouseDoubleClick="FattureDataGrid_MouseDoubleClick">
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Segna pagata" Click="MenuSegnaPagata_Click"/>
+                    <MenuItem Header="Segna non pagata" Click="MenuSegnaNonPagata_Click"/>
+                    <Separator/>
+                    <MenuItem Header="Imposta scadenza" Click="MenuImpostaScadenza_Click"/>
+                    <MenuItem Header="Svuota scadenza" Click="MenuSvuotaScadenza_Click"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Numero" Binding="{Binding NumeroDocumento}" Width="100"/>
+                <DataGridTextColumn Header="Data" Binding="{Binding DataDocumento, StringFormat=dd/MM/yyyy}" Width="100"/>
+                <DataGridTextColumn Header="Cliente/Fornitore" Binding="{Binding ControparteRagioneSociale}" Width="250"/>
+                <DataGridTextColumn Header="Importo" Binding="{Binding TotaleDocumento, StringFormat=C2}" Width="120"/>
+                <DataGridTextColumn Header="Tipo" Binding="{Binding TipoDocumento}" Width="150"/>
+                <DataGridTextColumn Header="Emissione" Binding="{Binding Emissione}" Width="100"/>
+                <DataGridTextColumn Header="Da DDT" Binding="{Binding DdtOrigineNumero}" Width="120"/>
+                <DataGridTextColumn Header="Scadenza" Binding="{Binding DataScadenzaPagamento, StringFormat=dd/MM/yyyy}" Width="110"/>
+                <DataGridTextColumn Header="Giorni" Binding="{Binding GiorniAllaScadenza}" Width="70"/>
+                <DataGridTextColumn Header="Stato" Binding="{Binding StatoPagamento}" Width="120"/>
+                <DataGridTextColumn Header="Pag." Binding="{Binding DataPagamento, StringFormat=dd/MM/yyyy}" Width="90"/>
+                <DataGridTextColumn Header="Pagamento" Binding="{Binding ModalitaPagamento}" Width="140"/>
+                <DataGridTextColumn Header="Banca" Binding="{Binding BancaAppoggio}" Width="140"/>
+                <DataGridCheckBoxColumn Header="Pagata" IsReadOnly="True" Binding="{Binding IsPagata, Mode=OneWay}" Width="80"/>
+                <DataGridCheckBoxColumn Header="Scaduta" IsReadOnly="True" Binding="{Binding IsScaduta, Mode=OneWay}" Width="80"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Mostrate: " FontWeight="Bold"/>
+            <TextBlock x:Name="TotaleMostrate" Text="0"/>
+            <TextBlock Text=" / Totale: " FontWeight="Bold" Margin="10,0,0,0"/>
+            <TextBlock x:Name="TotaleFatture" Text="0"/>
+            <TextBlock Text=" | Importo mostrato: " FontWeight="Bold" Margin="20,0,0,0"/>
+            <TextBlock x:Name="ImportoMostrato" Text="€ 0,00"/>
+
+            <StackPanel x:Name="PagateSummaryPanel" Orientation="Horizontal" Margin="20,0,0,0" Visibility="Collapsed">
+                <TextBlock Text=" | Incassate (periodo): " FontWeight="Bold"/>
+                <TextBlock x:Name="PagateCount" Text="0"/>
+                <TextBlock Text=" ("/>
+                <TextBlock x:Name="PagateImporto" Text="€ 0,00"/>
+                <TextBlock Text=")"/>
+            </StackPanel>
+
+            <TextBlock Text=" | Non pagate: " FontWeight="Bold" Margin="20,0,0,0"/>
+            <TextBlock x:Name="NonPagateCount" Text="0"/>
+            <TextBlock Text=" ("/>
+            <TextBlock x:Name="NonPagateImporto" Text="€ 0,00"/>
+            <TextBlock Text=")"/>
+            <TextBlock Text=" | Scadute: " FontWeight="Bold" Margin="20,0,0,0"/>
+            <TextBlock x:Name="ScaduteCount" Text="0"/>
+            <TextBlock Text=" ("/>
+            <TextBlock x:Name="ScaduteImporto" Text="€ 0,00"/>
+            <TextBlock Text=")"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

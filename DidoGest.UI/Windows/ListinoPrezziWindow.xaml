@@ -1,0 +1,49 @@
+<Window x:Class="DidoGest.UI.Windows.ListinoPrezziWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Prezzi Listino" Height="700" Width="900" WindowStartupLocation="CenterScreen"
+        Style="{StaticResource MaterialDesignWindow}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" x:Name="LblTitolo" Text="Prezzi" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <ComboBox x:Name="CmbArticolo" Width="260" Margin="0,0,10,0" 
+                      materialDesign:HintAssist.Hint="Articolo" 
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+            <TextBox x:Name="TxtPrezzo" Width="120" Margin="0,0,10,0" 
+                     materialDesign:HintAssist.Hint="Prezzo" 
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+            <TextBox x:Name="TxtSconto" Width="120" Margin="0,0,10,0" 
+                     materialDesign:HintAssist.Hint="Sconto %" 
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"/>
+            <Button Content="Aggiungi" Click="BtnAggiungi_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Elimina" Click="BtnElimina_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="PrezziDataGrid" AutoGenerateColumns="False" 
+                  IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Articolo" Binding="{Binding ArticoloCodice}" Width="120"/>
+                <DataGridTextColumn Header="Descrizione" Binding="{Binding ArticoloDescrizione}" Width="350"/>
+                <DataGridTextColumn Header="Prezzo" Binding="{Binding Prezzo, StringFormat=N2}" Width="120"/>
+                <DataGridTextColumn Header="Sconto %" Binding="{Binding ScontoPercentuale, StringFormat=N2}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Righe: " FontWeight="Bold"/>
+            <TextBlock x:Name="TotaleRighe" Text="0"/>
+        </StackPanel>
+    </Grid>
+</Window>

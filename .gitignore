@@ -1,0 +1,31 @@
+# Build outputs
+**/bin/
+**/obj/
+Publish/
+
+# Portable outputs (generated)
+portable/app/
+portable/dist/
+portable/Logs/
+
+# Local runtime data
+*.db
+*.db-shm
+*.db-wal
+Logs/
+
+# IDE / tooling
+.vs/
+.idea/
+*.user
+*.suo
+*.cache
+
+# OS junk
+Thumbs.db
+Desktop.ini
+
+# Build artifacts in repo root (when someone runs publish/build here)
+*.exe
+*.dll
+*.pdb

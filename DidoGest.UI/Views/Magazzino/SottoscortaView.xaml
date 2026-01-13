@@ -1,0 +1,44 @@
+<UserControl x:Class="DidoGest.UI.Views.Magazzino.SottoscortaView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Sottoscorta / Da riordinare" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <ComboBox x:Name="CmbMagazzino" Width="250" Margin="0,0,10,0"
+                      materialDesign:HintAssist.Hint="Magazzino" 
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      SelectionChanged="CmbMagazzino_SelectionChanged"/>
+            <TextBox x:Name="SearchBox" Width="300" materialDesign:HintAssist.Hint="Cerca articolo..." 
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,10,0"
+                     TextChanged="SearchBox_TextChanged"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="SottoscortaDataGrid" AutoGenerateColumns="False" 
+                  IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False"
+                  MouseDoubleClick="SottoscortaDataGrid_MouseDoubleClick"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Articolo" Binding="{Binding ArticoloCodice}" Width="120"/>
+                <DataGridTextColumn Header="Descrizione" Binding="{Binding ArticoloDescrizione}" Width="320"/>
+                <DataGridTextColumn Header="Magazzino" Binding="{Binding MagazzinoCodice}" Width="110"/>
+                <DataGridTextColumn Header="Disponibile" Binding="{Binding QuantitaDisponibile, StringFormat=N2}" Width="110"/>
+                <DataGridTextColumn Header="Scorta Min." Binding="{Binding ScortaMinima, StringFormat=N2}" Width="110"/>
+                <DataGridTextColumn Header="Da riordinare" Binding="{Binding QuantitaDaRiordinare, StringFormat=N2}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Righe: " FontWeight="Bold"/>
+            <TextBlock x:Name="TotaleRighe" Text="0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,36 @@
+<Window x:Class="DidoGest.UI.Windows.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="Accesso" Height="320" Width="560" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="DIDO-GEST" FontSize="24" FontWeight="Bold" Margin="0,0,0,12"/>
+
+        <TextBox x:Name="TxtUser" Grid.Row="1" Margin="0,0,0,10"
+                 materialDesign:HintAssist.Hint="Utente"
+                 Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+
+        <PasswordBox x:Name="Pwd" Grid.Row="2" Margin="0,0,0,10"
+                     materialDesign:HintAssist.Hint="Password" />
+
+        <TextBlock x:Name="LblError" Grid.Row="3" Foreground="DarkRed" TextWrapping="Wrap"/>
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Reimposta password (SuperAdmin)" Click="BtnReset_Click" Margin="0,0,10,0"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+            <Button Content="Esci" Click="BtnExit_Click" Margin="0,0,10,0"
+                    Style="{StaticResource MaterialDesignOutlinedButton}" />
+            <Button Content="Accedi" Click="BtnLogin_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}" />
+        </StackPanel>
+    </Grid>
+</Window>

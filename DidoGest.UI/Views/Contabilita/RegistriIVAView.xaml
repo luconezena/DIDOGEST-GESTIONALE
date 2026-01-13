@@ -1,0 +1,66 @@
+<UserControl x:Class="DidoGest.UI.Views.Contabilita.RegistriIVAView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Registri IVA" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <ComboBox x:Name="TipoRegistro" Width="200" materialDesign:HintAssist.Hint="Tipo Registro" 
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="0,0,10,0"
+                      SelectionChanged="TipoRegistro_SelectionChanged">
+                <ComboBoxItem Content="Vendite" IsSelected="True"/>
+                <ComboBoxItem Content="Acquisti"/>
+                <ComboBoxItem Content="Corrispettivi"/>
+            </ComboBox>
+            <DatePicker x:Name="DataDa" Width="150" materialDesign:HintAssist.Hint="Da data" Margin="0,0,10,0"/>
+            <DatePicker x:Name="DataA" Width="150" materialDesign:HintAssist.Hint="A data" Margin="0,0,10,0"/>
+            <Button Content="Cerca" Click="BtnCerca_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Stampa Registro" Click="BtnStampa_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="RegistriDataGrid" AutoGenerateColumns="False" 
+                  IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Data Reg." Binding="{Binding DataRegistrazione, StringFormat=dd/MM/yyyy}" Width="100"/>
+                <DataGridTextColumn Header="Protocollo" Binding="{Binding NumeroProtocollo}" Width="100"/>
+                <DataGridTextColumn Header="Documento" Binding="{Binding NumeroDocumento}" Width="100"/>
+                <DataGridTextColumn Header="Anagrafica" Binding="{Binding Anagrafica}" Width="250"/>
+                <DataGridTextColumn Header="Imponibile" Binding="{Binding Imponibile, StringFormat=C2}" Width="120"/>
+                <DataGridTextColumn Header="IVA" Binding="{Binding ImportoIVA, StringFormat=C2}" Width="100"/>
+                <DataGridTextColumn Header="Totale" Binding="{Binding Totale, StringFormat=C2}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="3" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <TextBlock Text="Totale movimenti: " FontWeight="Bold"/>
+                <TextBlock x:Name="TotaleMovimenti" Text="0"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Text="Tot. Imponibile: " FontWeight="Bold"/>
+                <TextBlock x:Name="TotaleImponibile" Text="€ 0,00" Margin="0,0,20,0"/>
+                <TextBlock Text="Tot. IVA: " FontWeight="Bold"/>
+                <TextBlock x:Name="TotaleIVA" Text="€ 0,00" Margin="0,0,20,0"/>
+                <TextBlock Text="Tot. Documento: " FontWeight="Bold"/>
+                <TextBlock x:Name="TotaleDocumento" Text="€ 0,00"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

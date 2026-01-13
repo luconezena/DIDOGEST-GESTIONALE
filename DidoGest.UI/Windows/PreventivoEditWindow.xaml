@@ -1,0 +1,44 @@
+<Window x:Class="DidoGest.UI.Windows.PreventivoEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Preventivo" Height="650" Width="750" WindowStartupLocation="CenterScreen"
+        Style="{StaticResource MaterialDesignWindow}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Dati Preventivo" FontSize="24" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Grid Margin="0,0,0,15">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="TxtNumero" materialDesign:HintAssist.Hint="Numero" 
+                             Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,10,0"/>
+                    <DatePicker Grid.Column="1" x:Name="DpData"/>
+                </Grid>
+
+                <ComboBox x:Name="CmbCliente" Margin="0,0,0,15"
+                          materialDesign:HintAssist.Hint="Cliente" 
+                          Style="{StaticResource MaterialDesignOutlinedComboBox}"/>
+
+                <TextBox x:Name="TxtNote" materialDesign:HintAssist.Hint="Note" 
+                         Style="{StaticResource MaterialDesignOutlinedTextBox}" AcceptsReturn="True" Height="140"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Salva" Click="BtnSalva_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Width="100" Margin="0,0,10,0"/>
+            <Button Content="Annulla" Click="BtnAnnulla_Click" 
+                    Style="{StaticResource MaterialDesignOutlinedButton}" Width="100"/>
+        </StackPanel>
+    </Grid>
+</Window>

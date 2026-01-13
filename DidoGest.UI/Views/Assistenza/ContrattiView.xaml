@@ -1,0 +1,43 @@
+<UserControl x:Class="DidoGest.UI.Views.Assistenza.ContrattiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Contratti" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <DockPanel Grid.Row="1" Margin="0,0,0,10">
+            <TextBox x:Name="SearchTextBox" Width="320" Margin="0,0,10,0"
+                     materialDesign:HintAssist.Hint="Cerca (numero, cliente, descrizione)"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                     TextChanged="SearchTextBox_TextChanged"/>
+            <Button DockPanel.Dock="Right" Content="Nuovo" Margin="0,0,10,0" Click="BtnNuovo_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+            <Button DockPanel.Dock="Right" Content="Modifica" Margin="0,0,10,0" Click="BtnModifica_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+            <Button DockPanel.Dock="Right" Content="Elimina" Click="BtnElimina_Click"
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </DockPanel>
+
+        <DataGrid Grid.Row="2" x:Name="ContrattiDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  CanUserAddRows="False" SelectionMode="Single"
+                  MouseDoubleClick="ContrattiDataGrid_MouseDoubleClick"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Numero" Binding="{Binding NumeroContratto}" Width="140"/>
+                <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente.RagioneSociale}" Width="240"/>
+                <DataGridTextColumn Header="Descrizione" Binding="{Binding Descrizione}" Width="*"/>
+                <DataGridTextColumn Header="Tipo" Binding="{Binding TipoContratto}" Width="160"/>
+                <DataGridTextColumn Header="Stato" Binding="{Binding StatoContratto}" Width="140"/>
+                <DataGridTextColumn Header="Inizio" Binding="{Binding DataInizio, StringFormat=dd/MM/yyyy}" Width="120"/>
+                <DataGridTextColumn Header="Fine" Binding="{Binding DataFine, StringFormat=dd/MM/yyyy}" Width="120"/>
+                <DataGridTextColumn Header="Importo" Binding="{Binding Importo, StringFormat=N2}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

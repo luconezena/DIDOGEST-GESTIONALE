@@ -1,0 +1,53 @@
+<UserControl x:Class="DidoGest.UI.Views.Documenti.OrdiniView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Ordini" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <ComboBox x:Name="CmbTipo" Width="200" Margin="0,0,10,0"
+                      materialDesign:HintAssist.Hint="Tipo" 
+                      Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                      SelectionChanged="CmbTipo_SelectionChanged"/>
+            <TextBox x:Name="SearchBox" Width="300" materialDesign:HintAssist.Hint="Cerca..." 
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,10,0"
+                     TextChanged="SearchBox_TextChanged"/>
+            <Button Content="Nuovo" Click="BtnNuovo_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Modifica" Click="BtnModifica_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+                <Button Content="Crea DDT" Click="BtnCreaDDT_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Elimina" Click="BtnElimina_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="OrdiniDataGrid" AutoGenerateColumns="False"
+                  IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False"
+                  MouseDoubleClick="OrdiniDataGrid_MouseDoubleClick"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tipo" Binding="{Binding TipoOrdine}" Width="120"/>
+                <DataGridTextColumn Header="Numero" Binding="{Binding NumeroOrdine}" Width="140"/>
+                <DataGridTextColumn Header="Data" Binding="{Binding DataOrdine, StringFormat=dd/MM/yyyy}" Width="120"/>
+                <DataGridTextColumn Header="Cliente" Binding="{Binding Cliente.RagioneSociale}" Width="240"/>
+                <DataGridTextColumn Header="Fornitore" Binding="{Binding Fornitore.RagioneSociale}" Width="240"/>
+                <DataGridTextColumn Header="Stato" Binding="{Binding StatoOrdine}" Width="140"/>
+                <DataGridTextColumn Header="Totale" Binding="{Binding Totale, StringFormat=N2}" Width="120"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Ordini: " FontWeight="Bold"/>
+            <TextBlock x:Name="Totale" Text="0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

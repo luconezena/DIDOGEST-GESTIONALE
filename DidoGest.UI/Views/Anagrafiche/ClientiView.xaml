@@ -1,0 +1,53 @@
+<UserControl x:Class="DidoGest.UI.Views.Anagrafiche.ClientiView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Titolo -->
+        <TextBlock Grid.Row="0" Text="Gestione Clienti" FontSize="28" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <!-- Barra ricerca e azioni -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBox x:Name="SearchBox" Width="300" materialDesign:HintAssist.Hint="Cerca cliente..." 
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" Margin="0,0,10,0"
+                     TextChanged="SearchBox_TextChanged"/>
+            <Button Content="Nuovo Cliente" Click="BtnNuovo_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Modifica" Click="BtnModifica_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}" Margin="0,0,10,0"/>
+            <Button Content="Elimina" Click="BtnElimina_Click" 
+                    Style="{StaticResource MaterialDesignRaisedButton}"/>
+        </StackPanel>
+
+        <!-- DataGrid clienti -->
+        <DataGrid Grid.Row="2" x:Name="ClientiDataGrid" AutoGenerateColumns="False" 
+                  IsReadOnly="True" SelectionMode="Single" CanUserAddRows="False"
+                  MouseDoubleClick="ClientiDataGrid_MouseDoubleClick"
+                  materialDesign:DataGridAssist.ColumnHeaderPadding="8">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Codice" Binding="{Binding Codice}" Width="100"/>
+                <DataGridTextColumn Header="Ragione Sociale" Binding="{Binding RagioneSociale}" Width="250"/>
+                <DataGridTextColumn Header="Partita IVA" Binding="{Binding PartitaIVA}" Width="150"/>
+                <DataGridTextColumn Header="Codice Fiscale" Binding="{Binding CodiceFiscale}" Width="150"/>
+                <DataGridTextColumn Header="Città" Binding="{Binding Citta}" Width="150"/>
+                <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="200"/>
+                <DataGridTextColumn Header="Telefono" Binding="{Binding Telefono}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Totali -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBlock Text="Totale clienti: " FontWeight="Bold"/>
+            <TextBlock x:Name="TotaleClienti" Text="0"/>
+            <TextBlock Text=" | Clienti attivi: " FontWeight="Bold" Margin="20,0,0,0"/>
+            <TextBlock x:Name="ClientiAttivi" Text="0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
