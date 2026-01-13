@@ -1,85 +1,71 @@
 # Licenza Software DIDO-GEST
 
-## Licenza Proprietaria
+## Licenza Non Commerciale (senza scopo di lucro) — DIDO-GEST
 
-Copyright © 2025 DIDO Software. Tutti i diritti riservati.
+Copyright © 2025–2026 DIDO Software.
 
-### Termini e Condizioni
+Questa licenza consente l'uso e la ridistribuzione di DIDO-GEST solo per finalità non commerciali / senza scopo di lucro.
 
-1. **CONCESSIONE DI LICENZA**
-   
-   DIDO Software ("Licenziante") concede all'acquirente ("Licenziatario") una licenza non esclusiva, non trasferibile per utilizzare DIDO-GEST ("Software") secondo i termini seguenti.
+### 1) Definizioni
 
-2. **RESTRIZIONI**
-   
-   Il Licenziatario NON può:
-   - Copiare, distribuire o trasferire il Software
-   - Modificare, decompilare o effettuare reverse engineering del Software
-   - Rimuovere o alterare avvisi di copyright
-   - Utilizzare il Software per scopi illegali
-   - Noleggiare, affittare o prestare il Software
-   - Utilizzare il Software su più computer senza licenze multiple
+- **Software**: DIDO-GEST e tutto il codice sorgente, i binari, i file e la documentazione inclusi in questo repository.
+- **Uso Non Commerciale / Senza Scopo di Lucro**: uso che non ha come obiettivo primario un vantaggio commerciale o un compenso monetario. Restano vietati vendita, noleggio, rivendita, licenze a pagamento, e l'uso del Software come parte di un servizio/consulenza a pagamento.
 
-3. **PROPRIETÀ INTELLETTUALE**
-   
-   Il Software è protetto da leggi sul copyright e trattati internazionali. DIDO Software mantiene tutti i diritti, titoli e interessi nel Software.
+### 2) Concessione di diritti
 
-4. **GARANZIA LIMITATA**
-   
-   Il Software è fornito "COSÌ COM'È" senza garanzie di alcun tipo. Il Licenziante non garantisce che:
-   - Il Software sia privo di errori
-   - Il Software operi senza interruzioni
-   - Il Software soddisfi specifici requisiti
+Alle condizioni di questa licenza, ti è concesso di:
 
-5. **LIMITAZIONE DI RESPONSABILITÀ**
-   
-   In nessun caso DIDO Software sarà responsabile per:
-   - Danni diretti, indiretti, incidentali o consequenziali
-   - Perdita di profitti o dati
-   - Interruzione di attività
-   derivanti dall'uso o impossibilità di uso del Software.
+- usare il Software per scopi non commerciali;
+- copiare e ridistribuire il Software (sorgente e/o binari) per scopi non commerciali;
+- modificare il Software e ridistribuire le modifiche per scopi non commerciali.
 
-6. **SUPPORTO TECNICO**
-   
-   Il supporto tecnico è fornito secondo i termini del contratto di assistenza separato.
+### 3) Condizioni
 
-7. **AGGIORNAMENTI**
-   
-   Gli aggiornamenti possono essere forniti a discrezione di DIDO Software e potrebbero essere soggetti a costi aggiuntivi.
+Se ridistribuisci il Software (sorgente o binari), devi:
 
-8. **RISOLUZIONE**
-   
-   Questa licenza è effettiva fino alla risoluzione. La licenza termina automaticamente in caso di violazione dei termini.
+1. mantenere intatti gli avvisi di copyright e questa licenza;
+2. includere una copia di questo file LICENSE.txt con la ridistribuzione;
+3. indicare chiaramente se il Software è stato modificato rispetto alla versione originale.
 
-9. **LEGGE APPLICABILE**
-   
-   Questa licenza è regolata dalle leggi italiane.
+### 4) Vincolo sul nome (branding)
 
-10. **ACCORDO COMPLETO**
-    
-    Questo documento costituisce l'intero accordo tra le parti riguardo al Software.
+- Non è consentito rinominare il prodotto: la ridistribuzione deve mantenere il nome **DIDO-GEST**.
+- Non è consentito presentare versioni modificate come ufficiali: se distribuisci una variante modificata, devi indicare chiaramente che è una "versione modificata" e chi ne è responsabile.
+
+### 5) Limitazioni (vietato)
+
+È vietato:
+
+- usare, distribuire o integrare il Software per scopi commerciali;
+- vendere il Software o includerlo in prodotti/servizi a pagamento;
+- rimuovere o alterare avvisi di copyright o attribuzione;
+- utilizzare il Software per scopi illegali.
+
+Per ottenere un'autorizzazione commerciale, contatta DIDO Software.
+
+### 6) Garanzia e responsabilità
+
+IL SOFTWARE È FORNITO "COSÌ COM'È", SENZA GARANZIE DI ALCUN TIPO.
+IN NESSUN CASO DIDO SOFTWARE SARÀ RESPONSABILE PER DANNI DIRETTI O INDIRETTI, PERDITA DI DATI O PROFITTI, INTERRUZIONE DI ATTIVITÀ, DERIVANTI DALL'USO O IMPOSSIBILITÀ DI USO DEL SOFTWARE.
 
 ---
 
 ## Componenti di Terze Parti
 
-Il Software utilizza componenti open source con le seguenti licenze:
+Il Software utilizza componenti open source con le seguenti licenze (vedi i rispettivi repository/pacchetti per i testi completi):
 
-- **Entity Framework Core**: MIT License
-- **Material Design In XAML**: MIT License
-- **.NET Runtime**: MIT License
-
-Le licenze complete dei componenti di terze parti sono disponibili nelle rispettive cartelle del progetto.
+- Entity Framework Core: MIT
+- Material Design in XAML: MIT
+- .NET Runtime: MIT
 
 ---
 
 ## Contatti
 
-Per informazioni sulla licenza:
+Per informazioni sulla licenza o per un uso commerciale:
+
 - Email: legal@didogest.com
-- Telefono: +39 XXX XXXXXXX
-- Sito web: www.didogest.com
 
 ---
 
-**UTILIZZANDO QUESTO SOFTWARE, ACCETTI I TERMINI DI QUESTA LICENZA.**
+USANDO, COPIANDO O DISTRIBUENDO QUESTO SOFTWARE, ACCETTI I TERMINI DI QUESTA LICENZA.
