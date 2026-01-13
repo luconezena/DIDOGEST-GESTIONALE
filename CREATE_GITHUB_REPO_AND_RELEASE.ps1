@@ -4,6 +4,9 @@ param(
     [Parameter(Mandatory = $true)]
     [string]$RepoName,
 
+    # Optional repository description (shown on GitHub). If omitted, it is inferred from README.md.
+    [string]$RepoDescription,
+
     # Public or private repo
     [ValidateSet('public', 'private')]
     [string]$Visibility = 'public',
@@ -35,11 +38,65 @@ if ($LASTEXITCODE -ne 0) {
 if ([string]::IsNullOrWhiteSpace($Owner)) {
     $Owner = (& gh api user -q .login)
     if ([string]::IsNullOrWhiteSpace($Owner)) {
-        throw 'Impossibile determinare l\'owner. Passa -Owner "tuoUsername".'
+        throw "Impossibile determinare l'owner. Passa -Owner 'tuoUsername'."
     }
 }
 
-$fullRepo = "$Owner/$RepoName"
+function Get-AppDescriptionFromReadme {
+    param([Parameter(Mandatory = $true)][string]$ReadmePath)
+
+    if (-not (Test-Path $ReadmePath)) {
+        return $null
+    }
+
+    $lines = Get-Content -LiteralPath $ReadmePath -Encoding utf8
+    $started = $false
+    $paragraph = New-Object System.Collections.Generic.List[string]
+    foreach ($line in $lines) {
+        $t = $line.Trim()
+
+        if (-not $started) {
+            if ([string]::IsNullOrWhiteSpace($t)) { continue }
+            if ($t -like '#*') { continue }
+            if ($t -match '^##\s+') { continue }
+            $started = $true
+        }
+
+        if ($started) {
+            if ([string]::IsNullOrWhiteSpace($t)) { break }
+            $paragraph.Add($line)
+        }
+    }
+
+    if ($paragraph.Count -eq 0) {
+        return $null
+    }
+
+    return ($paragraph -join " ").Trim()
+}
+
+function To-GitHubRepoSlug {
+    param([Parameter(Mandatory = $true)][string]$Name)
+
+    # GitHub repo name rules (practical): allow letters, digits, '.', '-', '_'. No spaces.
+    $slug = $Name.Trim()
+    $slug = [regex]::Replace($slug, '\s+', '-')
+    $slug = [regex]::Replace($slug, '[^A-Za-z0-9._-]', '-')
+    $slug = [regex]::Replace($slug, '-{2,}', '-')
+    $slug = $slug.Trim('-')
+
+    if ([string]::IsNullOrWhiteSpace($slug)) {
+        throw "Nome repo non valido dopo sanitizzazione: '$Name'"
+    }
+    return $slug
+}
+
+$repoSlug = To-GitHubRepoSlug -Name $RepoName
+$fullRepo = "$Owner/$repoSlug"
+
+if ([string]::IsNullOrWhiteSpace($RepoDescription)) {
+    $RepoDescription = Get-AppDescriptionFromReadme -ReadmePath (Join-Path $PSScriptRoot 'README.md')
+}
 
 # Ensure we are in repo root (this script is stored there)
 Set-Location -LiteralPath $PSScriptRoot
@@ -75,13 +132,40 @@ Write-Host "Creo repo GitHub: $fullRepo ($Visibility)" -ForegroundColor Cyan
 $visFlag = if ($Visibility -eq 'public') { '--public' } else { '--private' }
 
 # If origin exists, keep it; otherwise create and set it
-& git remote get-url origin 2>$null | Out-Null
-$hasOrigin = ($LASTEXITCODE -eq 0)
+$remotes = @(& git remote)
+$hasOrigin = ($remotes -contains 'origin')
 
 if (-not $hasOrigin) {
-    & gh repo create $fullRepo $visFlag --source . --remote origin --push
-    if ($LASTEXITCODE -ne 0) {
-        throw "Errore durante la creazione/push del repo (gh exit code: $LASTEXITCODE)."
+    # If the repo already exists (created manually), just add origin and push.
+    & gh repo view $fullRepo --json name -q .name 2>$null | Out-Null
+    $repoExists = ($LASTEXITCODE -eq 0)
+
+    if ($repoExists) {
+        Write-Host "Repo già esistente su GitHub: aggiungo origin e pusho" -ForegroundColor Yellow
+        & git remote add origin "https://github.com/$fullRepo.git" 2>$null | Out-Null
+        & git push -u origin HEAD
+        if ($LASTEXITCODE -ne 0) {
+            throw "Errore durante il push verso origin (git exit code: $LASTEXITCODE)."
+        }
+    }
+    else {
+        $createOut = & gh repo create $fullRepo $visFlag --source . --remote origin --push 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            $msg = ($createOut | Out-String).Trim()
+            if ($msg -match 'Resource not accessible by personal access token\s*\(createRepository\)') {
+                throw "Il token attuale non ha i permessi per CREARE un nuovo repository (createRepository). Se stai usando un token fine-grained (inizia con 'github_pat_'), crea un token CLASSIC (inizia con 'ghp_') con scope 'repo' oppure fai login OAuth con: gh auth login --web. In alternativa crea il repo manualmente su GitHub (nome: $repoSlug) e rilancia lo script.\nDettaglio: $msg"
+            }
+            throw "Errore durante la creazione/push del repo (gh exit code: $LASTEXITCODE).\nDettaglio: $msg"
+        }
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($RepoDescription)) {
+        try {
+            & gh repo edit $fullRepo --description $RepoDescription | Out-Null
+        }
+        catch {
+            Write-Host "WARN: impossibile impostare la descrizione del repo (permessi token insufficienti)." -ForegroundColor Yellow
+        }
     }
 }
 else {
@@ -89,6 +173,15 @@ else {
     & git push -u origin HEAD
     if ($LASTEXITCODE -ne 0) {
         throw "Errore durante il push (git exit code: $LASTEXITCODE)."
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($RepoDescription)) {
+        try {
+            & gh repo edit $fullRepo --description $RepoDescription | Out-Null
+        }
+        catch {
+            Write-Host "WARN: impossibile impostare la descrizione del repo (permessi token insufficienti)." -ForegroundColor Yellow
+        }
     }
 }
 
@@ -98,10 +191,24 @@ if (-not (Test-Path $publishScript)) {
     throw "Script non trovato: $publishScript"
 }
 
-$publishArgs = @('-Repo', $fullRepo)
-if ($Draft) { $publishArgs += '-Draft' }
-if ($SkipBuild) { $publishArgs += '-SkipBuild' }
-if (-not [string]::IsNullOrWhiteSpace($Tag)) { $publishArgs += @('-Tag', $Tag) }
-
 Write-Host "Pubblico la portable come GitHub Release..." -ForegroundColor Cyan
-& $publishScript @publishArgs
+if ($Draft) {
+    if ($SkipBuild) {
+        if (-not [string]::IsNullOrWhiteSpace($Tag)) { & $publishScript -Repo $fullRepo -Tag $Tag -Draft -SkipBuild }
+        else { & $publishScript -Repo $fullRepo -Draft -SkipBuild }
+    }
+    else {
+        if (-not [string]::IsNullOrWhiteSpace($Tag)) { & $publishScript -Repo $fullRepo -Tag $Tag -Draft }
+        else { & $publishScript -Repo $fullRepo -Draft }
+    }
+}
+else {
+    if ($SkipBuild) {
+        if (-not [string]::IsNullOrWhiteSpace($Tag)) { & $publishScript -Repo $fullRepo -Tag $Tag -SkipBuild }
+        else { & $publishScript -Repo $fullRepo -SkipBuild }
+    }
+    else {
+        if (-not [string]::IsNullOrWhiteSpace($Tag)) { & $publishScript -Repo $fullRepo -Tag $Tag }
+        else { & $publishScript -Repo $fullRepo }
+    }
+}

@@ -32,7 +32,7 @@ function Get-LatestVersionFromChangelog {
         throw "Changelog non trovato: $ChangelogPath"
     }
 
-    $content = Get-Content -LiteralPath $ChangelogPath -Raw
+    $content = Get-Content -LiteralPath $ChangelogPath -Raw -Encoding utf8
     $m = [regex]::Match($content, "(?m)^## \[(?<ver>[^\]]+)\]\s*-\s*.*$")
     if (-not $m.Success) {
         throw "Impossibile determinare la versione da CHANGELOG.md (header '## [x.y.z] - ...')"
@@ -47,7 +47,7 @@ function Extract-ChangelogSection {
         [Parameter(Mandatory = $true)][string]$Version
     )
 
-    $lines = Get-Content -LiteralPath $ChangelogPath
+    $lines = Get-Content -LiteralPath $ChangelogPath -Encoding utf8
     $start = -1
     for ($i = 0; $i -lt $lines.Count; $i++) {
         if ($lines[$i] -match "^## \[$([regex]::Escape($Version))\]\b") {
@@ -80,7 +80,7 @@ function Get-AppDescriptionFromReadme {
         return $null
     }
 
-    $lines = Get-Content -LiteralPath $ReadmePath
+    $lines = Get-Content -LiteralPath $ReadmePath -Encoding utf8
 
     # Heuristic: take the first meaningful paragraph after the initial headings.
     $started = $false
