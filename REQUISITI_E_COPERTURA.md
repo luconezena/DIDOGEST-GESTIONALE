@@ -1,6 +1,6 @@
 # DIDO-GEST — Requisiti e Copertura
 
-Fonte requisiti: [progetto gestionale.txt](progetto%20gestionale.txt)
+Fonte requisiti: specifica interna (rimossa dal repository)
 
 Legenda:
 - **FATTO** = presente e usabile
